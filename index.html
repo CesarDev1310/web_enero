@@ -12,7 +12,7 @@
         <div>
             <nav class="navbar navbar-expand-lg bg-body-tertiary mt-3">
                 <div class="container-fluid">
-                  <a class="navbar-brand" href="#">Navbar</a>
+                  <a id="idNavbar" class="navbar-brand" href="#">Navbar</a>
                   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                   </button>
@@ -95,6 +95,31 @@
                 <div  class="col-md-6">
                     <div>
                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident minima ab illum culpa recusandae fugiat libero quam, modi, explicabo reprehenderit non distinctio corrupti, delectus molestiae cupiditate asperiores laboriosam? Nihil, nisi.</p>
+                        
+                        <div class="mb-3">
+                          <form>
+                            <div class="mb-3">
+                              <label for="idNombre" class="form-label">Nombres</label>
+                              <input type="text" class="form-control" id="idNombre">
+                            </div>
+                            <div class="mb-3">
+                              <label for="idEmail" class="form-label">Correo Electrónico</label>
+                              <input type="email" class="form-control" id="idEmail" aria-describedby="emailHelp">
+                              <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                            </div>
+                            <div class="mb-3">
+                              <label for="exampleInputPassword1" class="form-label">Contraseña</label>
+                              <input type="password" class="form-control" id="idPassword">
+                            </div>
+                            <div class="mb-3 form-check">
+                              <input type="checkbox" class="form-check-input" id="idCheckbox"  >
+                              <label class="form-check-label" for="idCheckbox">Confirmar Envío</label>
+                            </div>
+                            
+                          </form>
+                          <button id="idEnviar" class="btn btn-primary">Enviar</button>
+                        </div>
+
                     </div>
                 </div>
                 <div  class="col-md-6">
@@ -112,7 +137,7 @@
                 </div>            
         </div>
 
-
+    <script src="./jquery/jquery-3.7.1.min.js"></script>
     <script src="./Bootstrap/popper.min.js"></script>
     <script src="./Bootstrap/bootstrap.min.js"></script>
     <script src="./js/inicio/inicio.js"></script>
