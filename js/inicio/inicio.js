@@ -1,5 +1,5 @@
 
-window.onload = function(){
+/*window.onload = function(){
     //Todo lo que este acá se va a ejecutar cuando la 
     //pagina este cargada
 
@@ -19,6 +19,25 @@ window.onload = function(){
         enviarDatos();
     });
 }
+*/
+
+$(document).ready( function(){
+    $("#idEnviar").attr("disabled", true);
+    mostrarMensaje();
+
+    $("#idCheckbox").on("change", function(){   
+        let checked = v_confirmacion = $(this).prop("checked");
+        if (checked) {
+            $("#idEnviar").removeAttr("disabled", true)
+        }else{
+            $("#idEnviar").attr("disabled", true)
+        }
+    });
+
+    $("#idEnviar").on("click", function(){
+        enviarDatos();
+    });
+});
 
 function enviarDatos(){
     v_nombre = $("#idNombre").val();
