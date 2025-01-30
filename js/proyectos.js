@@ -1,7 +1,17 @@
 
 $(document).ready( function(){
+    proyectoTemporales = listaProyectos;    
     generarProyectos();
+
+    obtenerParam();
+
+    $('#idValor').on('search', function () {
+        proyectoTemporales = listaProyectos;
+        generarProyectos();
+    });
 });
+
+let proyectoTemporales = [];
 
 let listaProyectos = [
     {
@@ -68,19 +78,58 @@ let listaProyectos = [
     }
 ];
 
-let proyectoTemporal = listaProyectos.filter(p => p.titulo.includes("quinto"));
+
+$("#idBuscar").on("click", function(){
+    buscarProyecto($("#idValor").val());
+});
+
+function buscarProyecto(val){
+    proyectoTemporales = listaProyectos;
+    proyectoTemporales = proyectoTemporales.filter(x=> x.titulo.includes(val));
+    generarProyectos();
+}
+
 
 function generarProyectos(){
+    $(".alingItem").empty();    
+    for (let i = 0; i < proyectoTemporales.length; i++) {
+        const proyecto = proyectoTemporales[i];
 
-    $(".alingItem").empty();
+        let itemsCarousel = "";
+        debugger
+        if (proyecto.imagenes.length > 0) {
 
-    for (let i = 0; i < proyectoTemporalproyectoTemporal.length; i++) {
-        const proyecto = listaProyectos[i];
+            for (let i = 0; i < proyecto.imagenes.length; i++) {
+                if (i == 0) {
+                    itemsCarousel += '<div class="carousel-item active">'+
+                                        '<img src="'+proyecto.imagenes[i]+'" class="d-block w-100" alt="...">'+
+                                    '</div>'; 
+                }else{
+                    itemsCarousel += '<div class="carousel-item">'+
+                                '<img src="'+proyecto.imagenes[i]+'" class="d-block w-100" alt="...">'+
+                            '</div>';
+                }
+            }            
+        }else{
+            itemsCarousel = '<div class="carousel-item active">'+
+                                '<img src="..." class="d-block w-100" alt="...">'+
+                            '</div>';
+        }        
 
         let item = '<div class="card mb-3" style="max-width: 440px;">'+
                             '<div class="row g-0">'+
                             '<div class="col-md-4">'+
-                                '<img src="'+proyecto.imagenes[0]+'" class="img-fluid rounded-start" alt="'+proyecto.titulo+'">'+
+                                    '<div id="cProy'+proyecto.idProyecto+'" class="carousel slide">'+
+                                    '<div class="carousel-inner">'+itemsCarousel+'</div>'+
+                                    '<button class="carousel-control-prev" type="button" data-bs-target="#cProy'+proyecto.idProyecto+'" data-bs-slide="prev">'+
+                                    '<span class="carousel-control-prev-icon" aria-hidden="true"></span>'+
+                                    '<span class="visually-hidden">Previous</span>'+
+                                    '</button>'+
+                                    '<button class="carousel-control-next" type="button" data-bs-target="#cProy'+proyecto.idProyecto+'" data-bs-slide="next">'+
+                                    '<span class="carousel-control-next-icon" aria-hidden="true"></span>'+
+                                    '<span class="visually-hidden">Next</span>'+
+                                    '</button>'+
+                                '</div>'+
                             '</div>'+
                             '<div class="col-md-8">'+
                                 '<div class="card-body">'+
@@ -91,8 +140,15 @@ function generarProyectos(){
                             '</div>'+
                             '</div>'+
                         '</div>';
-        console.log(item);                        
-        
         $(".alingItem").append(item);        
+    }
+}
+
+function obtenerParam(){
+    if(window.location.search != ''){
+        let param = window.location.search;
+        param = param.split("=")[1];
+        $("#idValor").val(param);
+        buscarProyecto(param);
     }
 }

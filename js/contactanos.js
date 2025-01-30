@@ -1,9 +1,12 @@
 
-
 $("#idEnviar").on('click', function(){
 
     //Validar que lo campos esten completos
     $("#idModal").modal('show');
+});
+
+$("#idBuscarC").on("click", function(){
+    window.location.href = "./proyectos.html?valorBusqueda="+$("#idValorC").val();    
 });
 
 function enviardatos(){
