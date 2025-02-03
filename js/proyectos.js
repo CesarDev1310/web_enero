@@ -95,8 +95,7 @@ function generarProyectos(){
     for (let i = 0; i < proyectoTemporales.length; i++) {
         const proyecto = proyectoTemporales[i];
 
-        let itemsCarousel = "";
-        debugger
+        let itemsCarousel = "";        
         if (proyecto.imagenes.length > 0) {
 
             for (let i = 0; i < proyecto.imagenes.length; i++) {
@@ -133,9 +132,10 @@ function generarProyectos(){
                             '</div>'+
                             '<div class="col-md-8">'+
                                 '<div class="card-body">'+
-                                '<h5 class="card-title">'+proyecto.titulo+'</h5>'+
-                                '<p class="card-text">'+proyecto.descripcion+'</p>'+
-                                '<p class="card-text"><small class="text-body-secondary">'+proyecto.fecha+'</small></p>'+
+                                    '<h5 class="card-title">'+proyecto.titulo+'</h5>'+
+                                    '<p class="card-text">'+proyecto.descripcion+'</p>'+
+                                    '<p class="card-text"><small class="text-body-secondary">'+proyecto.fecha+'</small></p>'+
+                                    '<small class="btn btn-sm btn-info" onclick="mostrarDetalle('+proyecto.idProyecto+')" >Ver más</small>'+
                                 '</div>'+
                             '</div>'+
                             '</div>'+
@@ -151,4 +151,47 @@ function obtenerParam(){
         $("#idValor").val(param);
         buscarProyecto(param);
     }
+}
+
+function mostrarDetalle(val){
+    let proyecto = listaProyectos.find(x=> x.idProyecto == val);
+
+    $("#idTituloProy").text(proyecto.titulo);
+    $("#idDescpProy").text(proyecto.descripcion);
+
+    let itemsCarousel = "";        
+        if (proyecto.imagenes.length > 0) {
+
+            for (let i = 0; i < proyecto.imagenes.length; i++) {
+                if (i == 0) {
+                    itemsCarousel += '<div class="carousel-item active">'+
+                                        '<img src="'+proyecto.imagenes[i]+'" class="d-block w-100" alt="...">'+
+                                    '</div>'; 
+                }else{
+                    itemsCarousel += '<div class="carousel-item">'+
+                                '<img src="'+proyecto.imagenes[i]+'" class="d-block w-100" alt="...">'+
+                            '</div>';
+                }
+            }            
+        }else{
+            itemsCarousel = '<div class="carousel-item active">'+
+                                '<img src="..." class="d-block w-100" alt="...">'+
+                            '</div>';
+        } 
+
+    let item = '<div class="col-md-12">'+
+                    '<div id="cProyM'+proyecto.idProyecto+'" class="carousel slide">'+
+                    '<div class="carousel-inner">'+itemsCarousel+'</div>'+
+                    '<button class="carousel-control-prev" type="button" data-bs-target="#cProyM'+proyecto.idProyecto+'" data-bs-slide="prev">'+
+                    '<span class="carousel-control-prev-icon" aria-hidden="true"></span>'+
+                    '<span class="visually-hidden">Previous</span>'+
+                    '</button>'+
+                    '<button class="carousel-control-next" type="button" data-bs-target="#cProyM'+proyecto.idProyecto+'" data-bs-slide="next">'+
+                    '<span class="carousel-control-next-icon" aria-hidden="true"></span>'+
+                    '<span class="visually-hidden">Next</span>'+
+                    '</button>'+
+                '</div>';
+    $("#idSlider").empty();
+    $("#idSlider").append(item);
+    $("#idModalProy").modal('show');
 }
