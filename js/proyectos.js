@@ -135,7 +135,7 @@ function generarProyectos(){
                                     '<h5 class="card-title">'+proyecto.titulo+'</h5>'+
                                     '<p class="card-text">'+proyecto.descripcion+'</p>'+
                                     '<p class="card-text"><small class="text-body-secondary">'+proyecto.fecha+'</small></p>'+
-                                    '<small class="btn btn-sm btn-info" onclick="mostrarDetalle('+proyecto.idProyecto+')" >Ver más</small>'+
+                                    '<small class="btn btn-sm btn-secondary" onclick="mostrarDetalle('+proyecto.idProyecto+')" >Ver más</small>'+
                                 '</div>'+
                             '</div>'+
                             '</div>'+
@@ -154,6 +154,17 @@ function obtenerParam(){
 }
 
 function mostrarDetalle(val){
+
+
+    let indiceProy = listaProyectos.findIndex(x=> x.idProyecto == 1);
+
+
+    listaProyectos[indiceProy].titulo = "Nuevo titulo";
+    listaProyectos[indiceProy].descripcion = "Nuva descripciónsadasdasdsad";
+
+    generarProyectos()
+
+
     let proyecto = listaProyectos.find(x=> x.idProyecto == val);
 
     $("#idTituloProy").text(proyecto.titulo);
@@ -195,3 +206,7 @@ function mostrarDetalle(val){
     $("#idSlider").append(item);
     $("#idModalProy").modal('show');
 }
+
+
+
+
