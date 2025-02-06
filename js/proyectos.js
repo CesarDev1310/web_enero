@@ -136,6 +136,7 @@ function generarProyectos(){
                                     '<p class="card-text">'+proyecto.descripcion+'</p>'+
                                     '<p class="card-text"><small class="text-body-secondary">'+proyecto.fecha+'</small></p>'+
                                     '<small class="btn btn-sm btn-secondary" onclick="mostrarDetalle('+proyecto.idProyecto+')" >Ver más</small>'+
+                                    '<small class="btn btn-sm btn-primary" onclick="editarProyecto('+proyecto.idProyecto+')" >Editar</small>'+
                                 '</div>'+
                             '</div>'+
                             '</div>'+
@@ -143,6 +144,47 @@ function generarProyectos(){
         $(".alingItem").append(item);        
     }
 }
+
+
+function actualizarProy(val){
+    debugger
+    let indiceProy = listaProyectos.findIndex(x=> x.idProyecto == val);
+    listaProyectos[indiceProy].titulo = $("#idTituloProyF").val();
+    listaProyectos[indiceProy].descripcion = $("#idDescProyF").text();
+    listaProyectos[indiceProy].fecha = $("#idFecProyF").val();
+
+    listaProyectos[indiceProy].tecnologias = [];
+    let tec = $("#idTecProyF").val().split(";");
+    tec.forEach(e => {
+        listaProyectos[indiceProy].tecnologias.push(e.trim());
+    });
+
+    generarProyectos();
+    $("#idModalForm").modal('hide');
+}
+
+function editarProyecto(val){
+    let proyecto = listaProyectos.find(x=> x.idProyecto == val);
+    $("#idTituloForm").text("Editando "+proyecto.titulo);
+
+    $("#idTituloProyF").val(proyecto.titulo);
+    $("#idDescProyF").text(proyecto.descripcion);
+    $("#idFecProyF").val(proyecto.fecha);
+
+
+    let tecnologias = proyecto.tecnologias.join(";");
+    let etiquetas = proyecto.etiquetas.join(";");
+    let imagenes = proyecto.imagenes.join(";");
+
+    $("#idTecProyF").val(tecnologias);
+    $("#idEtiqProyF").val(etiquetas);
+    $("#idImgProyF").val(imagenes);
+    $("#idBtnGuardar").empty();
+    $("#idBtnGuardar").append('<a class="btn btn-primary" onclick="actualizarProy('+proyecto.idProyecto+')">Guardar</a>');
+
+    $("#idModalForm").modal('show');
+}
+
 
 function obtenerParam(){
     if(window.location.search != ''){
@@ -154,16 +196,6 @@ function obtenerParam(){
 }
 
 function mostrarDetalle(val){
-
-
-    let indiceProy = listaProyectos.findIndex(x=> x.idProyecto == 1);
-
-
-    listaProyectos[indiceProy].titulo = "Nuevo titulo";
-    listaProyectos[indiceProy].descripcion = "Nuva descripciónsadasdasdsad";
-
-    generarProyectos()
-
 
     let proyecto = listaProyectos.find(x=> x.idProyecto == val);
 
