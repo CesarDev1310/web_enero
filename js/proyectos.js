@@ -89,6 +89,15 @@ function buscarProyecto(val){
     generarProyectos();
 }
 
+function generarTags(arr){
+    let resultado = "";
+    if (arr != undefined && arr != null && arr.length > 0) {
+        arr.forEach(e => {
+            resultado += '<span class="badge rounded-pill bg-primary">'+e+'</span>';
+        });
+    }
+    return resultado;
+}
 
 function generarProyectos(){
     $(".alingItem").empty();    
@@ -114,7 +123,7 @@ function generarProyectos(){
                                 '<img src="..." class="d-block w-100" alt="...">'+
                             '</div>';
         }        
-
+        
         let item = '<div class="card mb-3" style="max-width: 440px;">'+
                             '<div class="row g-0">'+
                             '<div class="col-md-4">'+
@@ -135,6 +144,7 @@ function generarProyectos(){
                                     '<h5 class="card-title">'+proyecto.titulo+'</h5>'+
                                     '<p class="card-text">'+proyecto.descripcion+'</p>'+
                                     '<p class="card-text"><small class="text-body-secondary">'+proyecto.fecha+'</small></p>'+
+                                    '<div class="mb-3">'+generarTags(proyecto.etiquetas)+'</div>'+
                                     '<small class="btn btn-sm btn-secondary" onclick="mostrarDetalle('+proyecto.idProyecto+')" >Ver más</small>'+
                                     '<small class="btn btn-sm btn-primary" onclick="editarProyecto('+proyecto.idProyecto+')" >Editar</small>'+
                                 '</div>'+
@@ -145,22 +155,53 @@ function generarProyectos(){
     }
 }
 
+function validarCampos(){
+    let valido = false;
+
+    let vUno = $("#idTituloProyF").val();
+    let vDos = $("#idDescProyF").text();
+    let vTres = $("#idFecProyF").val();
+
+    if (vUno != undefined && vUno != null && vUno.trim()!= "" &&
+        vDos != undefined && vDos != null && vDos.trim()!= "" &&
+        vTres != undefined && vTres != null && vTres.trim()!= "") {
+            valido = true
+    }
+
+    return valido;
+}
 
 function actualizarProy(val){
-    debugger
-    let indiceProy = listaProyectos.findIndex(x=> x.idProyecto == val);
-    listaProyectos[indiceProy].titulo = $("#idTituloProyF").val();
-    listaProyectos[indiceProy].descripcion = $("#idDescProyF").text();
-    listaProyectos[indiceProy].fecha = $("#idFecProyF").val();
 
-    listaProyectos[indiceProy].tecnologias = [];
-    let tec = $("#idTecProyF").val().split(";");
-    tec.forEach(e => {
-        listaProyectos[indiceProy].tecnologias.push(e.trim());
-    });
+    if (validarCampos()) {
+        let indiceProy = listaProyectos.findIndex(x=> x.idProyecto == val);
+        listaProyectos[indiceProy].titulo = $("#idTituloProyF").val();
+        listaProyectos[indiceProy].descripcion = $("#idDescProyF").text();
+        listaProyectos[indiceProy].fecha = $("#idFecProyF").val();
 
-    generarProyectos();
-    $("#idModalForm").modal('hide');
+        // Inicializando los arreglos en blanco
+        listaProyectos[indiceProy].tecnologias = [];
+        listaProyectos[indiceProy].etiquetas = [];
+        listaProyectos[indiceProy].imagenes = [];
+
+        let tec = $("#idTecProyF").val().split(";");
+        tec.forEach(e => {
+            listaProyectos[indiceProy].tecnologias.push(e.trim());
+        });
+        let tag = $("#idEtiqProyF").val().split(";");
+        tag.forEach(e => {
+            listaProyectos[indiceProy].etiquetas.push(e.trim());
+        });
+        let img = $("#idImgProyF").val().split(";");
+        img.forEach(e => {
+            listaProyectos[indiceProy].imagenes.push(e.trim());
+        });
+
+        generarProyectos();
+        $("#idModalForm").modal('hide');
+    }else{
+        $("#idModalInfo").modal('show');
+    }
 }
 
 function editarProyecto(val){
