@@ -94,3 +94,33 @@ function mostrarMensaje(valor){
     console.log("Bienvenidos !!")
 }
 
+
+class Alumno {
+    nombre;
+    apellido;
+    edad;
+}
+
+let alumnito =  new Alumno();
+
+alumnito.nombre = ""
+alumnito.apellido = ""
+alumnito.edad = ""
+
+let uriRequest = "https://pokeapi.co/api/v2/pokemon?limit=10";
+
+
+
+function getItems(uri){
+    let result = null;
+    $.ajax({
+        url: uri,
+        type: "GET",
+        async: false,
+        cache: false,
+        success: function (d) {
+            result = d;             
+        }
+    });
+    return result;
+}
